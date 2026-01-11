@@ -1,0 +1,276 @@
+/* ===============================
+   GLOBAL RESET & BASE
+================================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f1f5f9;
+  color: #0f172a;
+  padding: 20px;
+}
+
+.form-bg {
+  background: linear-gradient(135deg, #e2e8f0, #f8fafc);
+}
+
+/* ===============================
+   CONTAINER
+================================ */
+.container {
+  background: #ffffff;
+  padding: 25px;
+  max-width: 700px;
+  margin: auto;
+  border-radius: 14px;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.08);
+}
+
+.container.wide {
+  max-width: 1100px;
+}
+
+.center {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1e293b;
+}
+
+/* ===============================
+   FORM ELEMENTS
+================================ */
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #cbd5f5;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+}
+
+textarea {
+  resize: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* ===============================
+   ROW & INLINE LAYOUTS
+================================ */
+.row {
+  display: flex;
+  gap: 12px;
+}
+
+.row > div {
+  flex: 1;
+}
+
+.form-group.inline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.form-group.inline label {
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-group.inline label:first-child {
+  font-weight: bold;
+  min-width: 90px;
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+button {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+}
+
+.secondary {
+  background: linear-gradient(135deg, #64748b, #475569);
+  margin-top: 10px;
+}
+
+.secondary:hover {
+  background: linear-gradient(135deg, #475569, #334155);
+}
+
+.small-btn {
+  width: auto;
+  padding: 6px 14px;
+  font-size: 13px;
+  border-radius: 20px;
+}
+
+/* ===============================
+   CHIP / ACTION BUTTONS
+================================ */
+.chip {
+  padding: 6px 14px;
+  font-size: 13px;
+  border-radius: 20px;
+  width: auto;
+  border: none;
+  cursor: pointer;
+}
+
+.chip.danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.chip.danger:hover {
+  background: #dc2626;
+  color: white;
+}
+
+.back-btn {
+  margin-top: 15px;
+}
+
+/* ===============================
+   TABLE (ADMIN + STUDENT)
+================================ */
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th {
+  background: #f8fafc;
+  font-weight: 700;
+  color: #334155;
+}
+
+th,
+td {
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+tr:hover {
+  background: #f1f5f9;
+}
+
+/* ===============================
+   DELETE BUTTON
+================================ */
+.delete-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  padding: 0;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+  color: white;
+}
+
+/* ===============================
+   SEARCH INPUT
+================================ */
+#search {
+  margin-bottom: 12px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5f5;
+}
+
+/* ===============================
+   TOP ACTION BAR
+================================ */
+.top-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+/* ===============================
+   EMPTY STATE
+================================ */
+.empty {
+  padding: 20px;
+  font-style: italic;
+  color: #64748b;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
+
+  th,
+  td {
+    font-size: 13px;
+    padding: 8px;
+  }
+}

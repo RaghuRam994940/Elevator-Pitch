@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container wide">
+  <h2>Admin Dashboard – All Student Registrations</h2>
+
+  <input
+    type="text"
+    id="search"
+    placeholder="Search by Roll / Name / Dept / Email"
+    oninput="loadData()"
+  >
+
+  <div class="top-actions">
+    <button class="chip danger" onclick="clearAll()">Clear All</button>
+    <button class="chip secondary" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Roll</th>
+          <th>Name</th>
+          <th>Father</th>
+          <th>DOB</th>
+          <th>Mobile</th>
+          <th>Email</th>
+          <th>Gender</th>
+          <th>Department</th>
+          <th>Courses</th>
+          <th>City</th>
+          <th>Address</th>
+          <th>Request / Bug</th>
+          <th>❌</th>
+        </tr>
+      </thead>
+      <tbody id="table"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// =====================
+// AUTH GUARD
+// =====================
+if (sessionStorage.getItem("role") !== "admin") {
+  location.href = "login.html";
+}
+
+const table = document.getElementById("table");
+const searchInput = document.getElementById("search");
+
+// =====================
+// LOAD DATA
+// =====================
+function loadData() {
+  const query = searchInput.value.toLowerCase();
+  const students = JSON.parse(localStorage.getItem("students") || "[]");
+
+  table.innerHTML = "";
+
+  if (students.length === 0) {
+    table.innerHTML = `
+      <tr>
+        <td colspan="13" class="empty">No student records found</td>
+      </tr>`;
+    return;
+  }
+
+  students
+    .filter(s =>
+      s.roll.toLowerCase().includes(query) ||
+      s.department.toLowerCase().includes(query) ||
+      s.email.toLowerCase().includes(query) ||
+      `${s.firstName} ${s.lastName}`.toLowerCase().includes(query)
+    )
+    .forEach(s => {
+      table.innerHTML += `
+        <tr>
+          <td>${s.roll}</td>
+          <td>${s.firstName} ${s.lastName}</td>
+          <td>${s.father}</td>
+          <td>${s.dob}</td>
+          <td>${s.mobile}</td>
+          <td>${s.email}</td>
+          <td>${s.gender}</td>
+          <td>${s.department}</td>
+          <td>${s.courses}</td>
+          <td>${s.city}</td>
+          <td>${s.address || "-"}</td>
+          <td style="color:${s.request ? '#dc2626' : '#64748b'}">
+            ${s.request || "—"}
+          </td>
+          <td>
+            <button class="delete-btn" onclick="deleteStudent(${s.id})">✕</button>
+          </td>
+        </tr>
+      `;
+    });
+}
+
+// =====================
+// DELETE ONE STUDENT
+// =====================
+function deleteStudent(id) {
+  if (!confirm("Delete this student record?")) return;
+
+  let students = JSON.parse(localStorage.getItem("students") || "[]");
+  students = students.filter(s => s.id !== id);
+  localStorage.setItem("students", JSON.stringify(students));
+
+  loadData();
+}
+
+// =====================
+// CLEAR ALL DATA
+// =====================
+function clearAll() {
+  if (!confirm("⚠️ Delete ALL student records?")) return;
+  localStorage.removeItem("students");
+  loadData();
+}
+
+// =====================
+// LOGOUT
+// =====================
+function logout() {
+  sessionStorage.clear();
+  location.href = "login.html";
+}
+
+loadData();
+</script>
+
+</body>
+</html>

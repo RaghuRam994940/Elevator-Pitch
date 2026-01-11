@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Registration Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="form-bg">
+
+<div class="container wide">
+  <h2>Student Registration Form</h2>
+
+  <form id="form">
+
+    <div class="form-group">
+      <label>Roll No</label>
+      <input type="text" name="roll" required>
+    </div>
+
+    <div class="form-group row">
+      <div>
+        <label>First Name</label>
+        <input type="text" name="fname" required>
+      </div>
+      <div>
+        <label>Last Name</label>
+        <input type="text" name="lname" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Father's Name</label>
+      <input type="text" name="father" required>
+    </div>
+
+    <div class="form-group row">
+      <div>
+        <label>Day</label>
+        <input type="number" name="dd" placeholder="DD" required>
+      </div>
+      <div>
+        <label>Month</label>
+        <input type="number" name="mm" placeholder="MM" required>
+      </div>
+      <div>
+        <label>Year</label>
+        <input type="number" name="yyyy" placeholder="YYYY" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Mobile Number</label>
+      <input type="text" name="mobile" required>
+    </div>
+
+    <div class="form-group">
+      <label>Email ID</label>
+      <input type="email" name="email" required>
+    </div>
+
+    <div class="form-group inline">
+      <label>Gender</label>
+      <label><input type="radio" name="gender" value="Male" required> Male</label>
+      <label><input type="radio" name="gender" value="Female"> Female</label>
+    </div>
+
+    <div class="form-group">
+      <label>Department</label>
+      <select name="department" required>
+        <option value="">Select Department</option>
+        <option>CSE</option>
+        <option>IT</option>
+        <option>ECE</option>
+        <option>Civil</option>
+        <option>Mech</option>
+      </select>
+    </div>
+
+    <div class="form-group inline">
+      <label>Courses</label>
+      <label><input type="checkbox" name="course" value="Python"> Python</label>
+      <label><input type="checkbox" name="course" value="Java"> Java</label>
+      <label><input type="checkbox" name="course" value="Node"> Node</label>
+      <label><input type="checkbox" name="course" value="React"> React</label>
+      <label><input type="checkbox" name="course" value="PHP"> PHP</label>
+    </div>
+
+    <div class="form-group">
+      <label>City</label>
+      <input type="text" name="city" required>
+    </div>
+
+    <div class="form-group">
+      <label>Address</label>
+      <textarea name="address" rows="4"></textarea>
+    </div>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <button class="secondary small-btn" onclick="location.href='login.html'">
+    Go to Login
+  </button>
+</div>
+
+<script>
+const form = document.getElementById("form");
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const courses = [];
+  document.querySelectorAll("input[name='course']:checked")
+    .forEach(c => courses.push(c.value));
+
+  const students = JSON.parse(localStorage.getItem("students") || "[]");
+
+  // Prevent duplicate roll
+  if (students.some(s => s.roll === form.roll.value)) {
+    alert("Roll number already registered!");
+    return;
+  }
+
+  const student = {
+    id: Date.now(),
+    roll: form.roll.value.trim(),
+    firstName: form.fname.value.trim(),
+    lastName: form.lname.value.trim(),
+    father: form.father.value.trim(),
+    dob: `${form.dd.value}-${form.mm.value}-${form.yyyy.value}`,
+    mobile: form.mobile.value.trim(),
+    email: form.email.value.trim(),
+    gender: form.gender.value,
+    department: form.department.value,
+    courses: courses.join(", "),
+    city: form.city.value.trim(),
+    address: form.address.value.trim(),
+
+    // ⭐ REQUIRED FOR PORTAL SYSTEM
+    request: ""   // withdrawal / bug request
+  };
+
+  students.push(student);
+  localStorage.setItem("students", JSON.stringify(students));
+
+  alert("Registration Successful!");
+  form.reset();
+  location.href = "login.html";
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container wide">
+  <h2>My Profile</h2>
+
+  <table>
+    <tbody id="info"></tbody>
+  </table>
+
+  <button class="secondary" onclick="request()">Request Withdrawal / Report Bug</button>
+  <button onclick="logout()">Logout</button>
+</div>
+
+<script>
+if (sessionStorage.getItem("role") !== "student") {
+  location.href = "login.html";
+}
+
+const id = Number(sessionStorage.getItem("studentId"));
+const students = JSON.parse(localStorage.getItem("students"));
+const student = students.find(s => s.id === id);
+
+const info = document.getElementById("info");
+for (let key in student) {
+  if (key === "request") continue;
+  info.innerHTML += `<tr><th>${key}</th><td>${student[key]}</td></tr>`;
+}
+
+function request() {
+  const msg = prompt("Enter your request / bug report:");
+  if (!msg) return;
+
+  student.request = msg;
+  localStorage.setItem("students", JSON.stringify(students));
+  alert("Request submitted to Admin");
+}
+
+function logout() {
+  sessionStorage.clear();
+  location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

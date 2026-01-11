@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Portal Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Portal Login</h2>
+
+  <input id="username" placeholder="Roll No / Admin ID">
+  <input id="password" placeholder="Email / Admin Password">
+
+  <button onclick="login()">Login</button>
+</div>
+
+<script>
+function login() {
+  const u = username.value.trim();
+  const p = password.value.trim();
+
+  // ADMIN LOGIN
+  if (u === "admin" && p === "1234") {
+    sessionStorage.setItem("role", "admin");
+    location.href = "admin.html";
+    return;
+  }
+
+  // STUDENT LOGIN
+  const students = JSON.parse(localStorage.getItem("students") || "[]");
+  const student = students.find(s => s.roll === u && s.email === p);
+
+  if (!student) {
+    alert("Invalid credentials");
+    return;
+  }
+
+  sessionStorage.setItem("role", "student");
+  sessionStorage.setItem("studentId", student.id);
+  location.href = "student.html";
+}
+</script>
+
+</body>
+</html>
